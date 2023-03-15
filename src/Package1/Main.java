@@ -15,6 +15,7 @@ public class Main {
 	    System.out.println("Digita  'pizze' o '4'   se vuoi ordinare una bevanda ");
 	    System.out.println("Digita  'paga' o 5'   per pagare e uscire ");
 	    System.out.println("Digita  'esci' o '6'   per terminare l'ordinazione ");
+	    System.out.println("Luca è stato qui\nAttento a quando fai una commit senza controllare");
 	    
 	    Scanner s = new Scanner(System.in);
 	    String action = s.nextLine();
