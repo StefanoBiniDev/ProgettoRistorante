@@ -63,9 +63,9 @@ public class SalaRistorante { //observable
 	      if(clienteProvv.getNome().equals(nome)) {
 	    	  return scelta = 3;
 	      }
-	      if(clienteProvv.getNome() == nome) {
+	      /*if(clienteProvv.getNome() == nome) {
 	    	  return scelta = 3;
-	      }
+	      }*/
 	    }
 		return scelta;
 	}
@@ -97,7 +97,7 @@ public class SalaRistorante { //observable
 	}
 	
 	public Cliente getSearchedCliente(String nome, String cognome) {
-		Optional <Cliente> c = clientiAccomodati.stream().filter(cliente -> cliente.getNome().equals(nome) && cliente.getCognome().equals(cognome)).findFirst();
+		Optional <Cliente> c = clientiAccomodati.stream().filter(cliente -> (cliente.getNome()).equals(nome) && (cliente.getCognome()).equals(cognome)).findFirst();
 		Cliente cliente = c.get();
 		return cliente;
 	}

@@ -16,7 +16,6 @@ public class Main {
 	    System.out.println("Digita  'pizze' o '4'   se vuoi ordinare una bevanda ");
 	    System.out.println("Digita  'paga' o 5'   per pagare e uscire ");
 	    System.out.println("Digita  'esci' o '6'   per terminare l'ordinazione ");
-	    System.out.println("Luca è stato qui\nAttento a quando fai una commit senza controllare");
 	    
 	    scan = new Scanner(System.in);
 	    String action = scan.nextLine();
@@ -114,11 +113,11 @@ public class Main {
 				System.out.println("Vi preghiamo gentilmente di fornire i vostri dati");
 				System.out.println("Nome: ");
 				//s = new Scanner(System.in);
-			    String nomeNuovoCliente = scan.nextLine().toLowerCase();
+			    String nomeNuovoCliente = scan.nextLine();
 			    
 			    System.out.println("Cognome: ");
 				//s = new Scanner(System.in);
-			    String cognomeNuovoCliente = scan.nextLine().toLowerCase();
+			    String cognomeNuovoCliente = scan.nextLine();
 				
 			    /* CONTROLLO SE IL CLIENTE E' NUOVO OPPURE SE E' GIA IN CODA, O ANCORA SE E' AL TAVOLO E DESIDERA ORDINARE QUALCOSA */
 			    

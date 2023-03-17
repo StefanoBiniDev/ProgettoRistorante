@@ -136,16 +136,15 @@ public class Reception implements PropertyChangeListener { // observer
 	
 	public int identificazioneCliente(String nomeNuovoCliente, String cognomeNuovoCliente) {
 		int scelta = 1;
-		
+		System.out.println("nome e cognome: "+nomeNuovoCliente+cognomeNuovoCliente);
 		/*controllo incrociato con la coda */
 		
-		Optional <Cliente> clienteProvv = codaClienti.stream().filter(cli -> cli.getNome().equals(nomeNuovoCliente.toLowerCase()) && cli.getCognome().equals(cognomeNuovoCliente.toLowerCase())).findAny();
+		Optional <Cliente> clienteProvv = codaClienti.stream().filter(cli -> cli.getNome().equals(nomeNuovoCliente) && cli.getCognome().equals(cognomeNuovoCliente)).findAny();
 		if(clienteProvv.isPresent()) {
 			//Cliente cli = clienteProvv.get();
 			return scelta = 2; //cliente in coda
 		}
 		else {
-			System.out.println("Guardo se è 3 ");
 			scelta = SalaRistorante.getInstance().controlloClienti(nomeNuovoCliente,cognomeNuovoCliente);
 		}
 		if(scelta == 0) {
