@@ -96,10 +96,11 @@ public class Inizializzazione {
 				SELECT * FROM Menu
 				""");
 
+		int id_antipasto = 1, id_primo = 1, id_pizza = 1, id_dolce = 1;
+
 		while (rs.next()) {
 			//System.out.println("o: "+rs.getInt(1));
 
-			int id_antipasto = 1, id_primo = 1, id_pizza = 1, id_dolce = 1;
 			if (rs.getString(4).equals("Antipasto")) {
 				Pietanza pietanza = new Pietanza(id_antipasto,rs.getString(2), rs.getFloat(3), rs.getString(4));
 				Menu.getInstance().getAntipasti().add(pietanza);

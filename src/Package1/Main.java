@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
+	static Scanner scan;
 	static int menu() {
 		System.out.println( "\t Cosa volete ordinare? ");
 	    System.out.println(" ");
@@ -17,46 +18,60 @@ public class Main {
 	    System.out.println("Digita  'esci' o '6'   per terminare l'ordinazione ");
 	    System.out.println("Luca è stato qui\nAttento a quando fai una commit senza controllare");
 	    
-	    Scanner s = new Scanner(System.in);
-	    String action = s.nextLine();
+	    scan = new Scanner(System.in);
+	    String action = scan.nextLine();
 	    int visitor_action;
 	    //if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4")|| action.equals("5")) 
 	    if (Integer.valueOf(action) >=1 && Integer.valueOf(action) <= 6)
 	    	visitor_action = Integer.valueOf(action);
 	    else
 	    	visitor_action = 0;
+	    //s.close();
 	    return visitor_action;
+	    
 	}
 	
 	@SuppressWarnings("resource")
 	static void ordineMenuScelto(ArrayList<Pietanza> menuScelto,String nomeMenu, String nomeCliente, String cognomeCliente) {
 		Optional <Pietanza> pietanza;
+		boolean goBack = false;
 		do {
 			
 			Menu.getInstance().showSelectedMenu(menuScelto,nomeMenu);
 			/*mostrare le pietanze da una lista apposita*/
 			System.out.println("");
-	    	Scanner s = new Scanner(System.in);
-		    int num = s.nextInt();
-	    	
-	    	System.out.println("In che quantità?");
-	    	s = new Scanner(System.in);
-		    int qta = s.nextInt();
-		    
-		    /* lista ordini al tavolo */
-		    
-		    /* calcolo prezzo per il numero di pietanze ordinate*/
-		    pietanza = menuScelto.stream().filter(obj -> obj.getId() == num).findFirst();
-		    if(pietanza != null) {
-			    float costo = (menuScelto.stream().filter(obj -> obj.getId() == num).findFirst().get().getPrezzo()) * qta;
-			    
-			    SalaRistorante.getInstance().getSearchedCliente(nomeCliente, cognomeCliente).setCostoServizio(costo);
-			    
-		    	System.out.println("Ordine eseguito");
-		    }
-		    
-		    s.close();
-		}while(pietanza != null);
+			
+			scan= new Scanner(System.in);
+			//String num = scan.nextLine();
+			System.out.println(scan.hasNextInt());
+			if (scan.hasNextInt()) {
+				int num = scan.nextInt();
+				if( num>0 && num<=menuScelto.size() ) {
+			    	
+			    	System.out.println("In che quantità?");
+			    	//scan = new Scanner(System.in);
+				    int qta = scan.nextInt();
+				    
+				    /* lista ordini al tavolo */
+				    
+				    /* calcolo prezzo per il numero di pietanze ordinate*/
+				    pietanza = menuScelto.stream().filter(obj -> obj.getId() == num).findFirst();
+				    System.out.println(pietanza.isPresent()+" ++ " +pietanza.get().getId());
+				    if(pietanza != null) {
+					    float costo = (menuScelto.stream().filter(obj -> obj.getId() == num).findFirst().get().getPrezzo()) * qta;
+					    
+					    SalaRistorante.getInstance().getSearchedCliente(nomeCliente, cognomeCliente).setCostoServizio(costo);
+					    
+				    	System.out.println("Ordine eseguito");
+				    }	
+				
+				}
+				
+			}else {
+				goBack = true;
+			}
+		    //s1.close();
+		}while(/*pietanza != null &&*/ goBack == false);
 	}
 
 	@SuppressWarnings("resource")
@@ -64,7 +79,7 @@ public class Main {
 		
 		int sceltaTipoMenu = 0; 
 		boolean esecuzioneSecondaria = true;
-    	Scanner s = null;    	
+    	//Scanner s = null;    	
 		
 		Inizializzazione init = new Inizializzazione();
 		init.begin();
@@ -87,8 +102,8 @@ public class Main {
 			new Scanner(System.in).nextLine();
 			
 			System.out.println("Buona sera! Benvenuti al nostro ristorante. Desiderate entrare nell'applicazione? (s/si/n/no)");
-			s = new Scanner(System.in);
-		    String scelta = s.nextLine();
+			scan = new Scanner(System.in);
+		    String scelta = scan.nextLine();
 		    
 		    if(scelta.toLowerCase().equals("n")||scelta.toLowerCase().equals("no")) {
 				System.out.println("Arrivederci!");
@@ -98,12 +113,12 @@ public class Main {
 				
 				System.out.println("Vi preghiamo gentilmente di fornire i vostri dati");
 				System.out.println("Nome: ");
-				s = new Scanner(System.in);
-			    String nomeNuovoCliente = s.nextLine();
+				//s = new Scanner(System.in);
+			    String nomeNuovoCliente = scan.nextLine().toLowerCase();
 			    
 			    System.out.println("Cognome: ");
-				s = new Scanner(System.in);
-			    String cognomeNuovoCliente = s.nextLine();
+				//s = new Scanner(System.in);
+			    String cognomeNuovoCliente = scan.nextLine().toLowerCase();
 				
 			    /* CONTROLLO SE IL CLIENTE E' NUOVO OPPURE SE E' GIA IN CODA, O ANCORA SE E' AL TAVOLO E DESIDERA ORDINARE QUALCOSA */
 			    
@@ -113,8 +128,8 @@ public class Main {
 						 System.out.println(" Benvenuti, provvediamo ad inserirvi nella coda di attesa: ");
 				    	    
 						 System.out.println("quanti siete? ");
-						 s = new Scanner(System.in);
-				    	 int numCommensali = s.nextInt();
+						 //s = new Scanner(System.in);
+				    	 int numCommensali = scan.nextInt();
 				    	    
 						 Cliente nuovoCliente = new Cliente(nomeNuovoCliente,cognomeNuovoCliente,numCommensali);
 						 Reception.getInstance().addCliente(nuovoCliente);
@@ -142,15 +157,19 @@ public class Main {
 							case 1:
 							    System.out.println(" size"+Menu.getInstance().getAntipasti().size());
 								ordineMenuScelto(Menu.getInstance().getAntipasti(),"Antipasti",nomeNuovoCliente,cognomeNuovoCliente);
-					    		break;
+					            esecuzioneSecondaria = true;
+								break;
 							case 2:
 								ordineMenuScelto(Menu.getInstance().getPrimi(),"Primi",nomeNuovoCliente,cognomeNuovoCliente);
+					            esecuzioneSecondaria = true;
 								break;
 							case 3:
 								ordineMenuScelto(Menu.getInstance().getDolci(),"Dolci",nomeNuovoCliente,cognomeNuovoCliente);
-					    		break;
+					            esecuzioneSecondaria = true;
+								break;
 							case 4:
 								ordineMenuScelto(Menu.getInstance().getPizze(),"Pizze",nomeNuovoCliente,cognomeNuovoCliente);
+					            esecuzioneSecondaria = true;
 								break;
 							case 5:			
 								/* pagare e liberare il tavolo */
@@ -162,10 +181,17 @@ public class Main {
 							    
 								SalaRistorante.getInstance().getClientAccomodati().remove(clienteUscente);
 								
-								System.out.println("Salve, il conto da saldare per il pasto è di : "+clienteUscente.getCostoServizio());
+								System.out.println("Salve, il conto da saldare per il pasto è di : "+clienteUscente.getCostoServizio() +" euro");
 								System.out.println("Le auguriamo buona giornata! A presto");
 					            esecuzioneSecondaria = false;
-					            esecuzione = false;
+					            
+					            System.out.println("(vuoi terminare l'esecuzione del programma?) (s/si) per terminare, (altro) per proseguire");
+								scan = new Scanner(System.in);
+							    String nuovaScelta = scan.nextLine();
+							    
+							    if(nuovaScelta.toLowerCase().equals("s")||nuovaScelta.toLowerCase().equals("si")){
+							    	esecuzione = false;
+							    }
 					    		break;
 							case 6:			
 								System.out.println("Uscita dal menu, ritorno alla schermata principale ");
@@ -193,6 +219,6 @@ public class Main {
 		    	System.out.println("Input non riconosciuto. Prova di nuovo");
 		    }
 		}while(esecuzione);
-		s.close();
+		scan.close();
 	}
 }

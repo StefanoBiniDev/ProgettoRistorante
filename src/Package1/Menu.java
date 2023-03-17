@@ -63,7 +63,6 @@ public class Menu {
 	public void showSelectedMenu(ArrayList<Pietanza> menuScelto,String nomeMenu) {
 	    System.out.println("Ecco il menu "+ nomeMenu +": " );
 	    System.out.println(" ");
-	    System.out.println(" size: "+menuScelto.size());
 	    menuScelto.forEach(item ->  System.out.println(item.getId()+") "+"nome:"+ item.getNome()+" ,prezzo: "+item.getPrezzo()));
 	    System.out.println(" ");
 	    System.out.println("Che desideri ordinare? (Digita altro per tornare alla selezione menu)");

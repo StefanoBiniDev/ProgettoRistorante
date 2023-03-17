@@ -139,9 +139,9 @@ public class Reception implements PropertyChangeListener { // observer
 		
 		/*controllo incrociato con la coda */
 		
-		Optional <Cliente> clienteProvv = codaClienti.stream().filter(cli -> cli.getNome().equals(nomeNuovoCliente) && cli.getCognome().equals(cognomeNuovoCliente)).findAny();
+		Optional <Cliente> clienteProvv = codaClienti.stream().filter(cli -> cli.getNome().equals(nomeNuovoCliente.toLowerCase()) && cli.getCognome().equals(cognomeNuovoCliente.toLowerCase())).findAny();
 		if(clienteProvv.isPresent()) {
-			Cliente cli = clienteProvv.get();
+			//Cliente cli = clienteProvv.get();
 			return scelta = 2; //cliente in coda
 		}
 		else {
